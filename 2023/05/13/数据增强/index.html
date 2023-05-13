@@ -6,20 +6,20 @@
   
   <title>数据增强 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="图像旋转 绕原点旋转  如图所示, 点P坐标为(x, y), OP与x轴正方向的夹角为$\alpha$, OP的长度为$l$. 点P绕原点$O$顺时针旋转$\theta$到$P^{‘}$为$(x^{‘}, y^{‘})$ 点P的坐标表示为:$$\begin{cases} x &#x3D; l \cdot{\cos{\alpha }} \ y &#x3D; l \cdot{\sin{\alpha }">
+  <meta name="description" content="图像旋转 绕原点旋转  如图所示, 点P坐标为(x, y), OP与x轴正方向的夹角为$\alpha$, OP的长度为$l$. 点P绕原点$O$顺时针旋转$\theta$到$P^{‘}$为$(x^{‘}, y^{‘})$ 点P的坐标表示为:  \begin{cases}  x &#x3D; l \cdot{\cos{\alpha }}  \\  y &#x3D; l \cdot{\sin{\alpha }} \end">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据增强">
 <meta property="og:url" content="http://example.com/2023/05/13/%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="图像旋转 绕原点旋转  如图所示, 点P坐标为(x, y), OP与x轴正方向的夹角为$\alpha$, OP的长度为$l$. 点P绕原点$O$顺时针旋转$\theta$到$P^{‘}$为$(x^{‘}, y^{‘})$ 点P的坐标表示为:$$\begin{cases} x &#x3D; l \cdot{\cos{\alpha }} \ y &#x3D; l \cdot{\sin{\alpha }">
+<meta property="og:description" content="图像旋转 绕原点旋转  如图所示, 点P坐标为(x, y), OP与x轴正方向的夹角为$\alpha$, OP的长度为$l$. 点P绕原点$O$顺时针旋转$\theta$到$P^{‘}$为$(x^{‘}, y^{‘})$ 点P的坐标表示为:  \begin{cases}  x &#x3D; l \cdot{\cos{\alpha }}  \\  y &#x3D; l \cdot{\sin{\alpha }} \end">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/src/data_augmentation/RotateAroundTheOrigin.png">
-<meta property="og:image" content="http://example.com/src/data_augmentation/RotateAroundCenter.png">
+<meta property="og:image" content="http://example.com/2023/05/13/src/data_augmentation/RotateAroundTheOrigin.png">
+<meta property="og:image" content="http://example.com/2023/05/13/src/data_augmentation/RotateAroundCenter.png">
 <meta property="article:published_time" content="2023-05-13T13:46:55.000Z">
-<meta property="article:modified_time" content="2023-05-13T18:20:37.359Z">
+<meta property="article:modified_time" content="2023-05-13T18:38:41.812Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/src/data_augmentation/RotateAroundTheOrigin.png">
+<meta name="twitter:image" content="http://example.com/2023/05/13/src/data_augmentation/RotateAroundTheOrigin.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -104,28 +104,98 @@
       
         <h2 id="图像旋转"><a href="#图像旋转" class="headerlink" title="图像旋转"></a>图像旋转</h2><ol>
 <li><p>绕原点旋转</p>
-<p><img src="/../src/data_augmentation/RotateAroundTheOrigin.png" alt="绕原点旋转"></p>
+<p><img src="../src/data_augmentation/RotateAroundTheOrigin.png" alt="绕原点旋转"></p>
 <p>如图所示, 点P坐标为(x, y), OP与x轴正方向的夹角为$\alpha$, OP的长度为$l$. 点P绕原点$O$顺时针旋转$\theta$到$P^{‘}$为$(x^{‘}, y^{‘})$</p>
-<p>点P的坐标表示为:<br>$$<br>\begin{cases}<br> x &#x3D; l \cdot{\cos{\alpha }}<br> \<br> y &#x3D; l \cdot{\sin{\alpha }}<br>\end{cases}<br>$$</p>
-<p>点$P^{‘}$的坐标表示为:<br>$$<br>\begin{cases}<br> x^{‘} &amp; &#x3D; l \cdot{\cos{(\alpha - \theta)}} \<br>   &amp; &#x3D; l \cdot{\cos{\alpha}\cos{\theta}} + l \cdot{\sin{\alpha}\sin{\theta}} \<br>   &amp;&#x3D; x cos{\theta} + y \sin{\theta}<br> \<br> y^{‘} &amp;&#x3D; l \cdot{\sin{(\alpha - \theta)}} \<br>   &amp;&#x3D; l \cdot{\sin{\alpha}\cos{\theta}} - l \cdot{\cos{\alpha}\sin{\theta}} \<br>   &amp;&#x3D; - x \sin{\theta} + y cos{\theta}<br>\end{cases}<br>$$</p>
-<h1 id="即-begin-bmatrix-x-‘-y-‘-1-end-bmatrix"><a href="#即-begin-bmatrix-x-‘-y-‘-1-end-bmatrix" class="headerlink" title="即:$$\begin{bmatrix}   x^{‘} \   y^{‘} \   1\end{bmatrix}"></a>即:<br>$$<br>\begin{bmatrix}<br>   x^{‘} \<br>   y^{‘} \<br>   1<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>   cos{\theta} &amp; sin{\theta} &amp; 0 \<br>   -sin{\theta} &amp; cos{\theta} &amp; 0 \<br>   0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>\cdot<br>\begin{bmatrix}<br>   x \<br>   y \<br>   1<br>\end{bmatrix}<br>$$</p>
-</li>
+<p>点P的坐标表示为:</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+ x = l \cdot{\cos{\alpha }}
+ \\
+ y = l \cdot{\sin{\alpha }}
+\end{cases}</script><p>点$P^{‘}$的坐标表示为:</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+ x^{'} & = l \cdot{\cos{(\alpha - \theta)}} \\ 
+       & = l \cdot{\cos{\alpha}\cos{\theta}} + l \cdot{\sin{\alpha}\sin{\theta}} \\
+       &= x cos{\theta} + y \sin{\theta}
+ \\
+ y^{'} &= l \cdot{\sin{(\alpha - \theta)}} \\
+       &= l \cdot{\sin{\alpha}\cos{\theta}} - l \cdot{\cos{\alpha}\sin{\theta}} \\
+       &= - x \sin{\theta} + y cos{\theta}
+\end{cases}</script><p>即:</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+   x^{'} \\
+   y^{'} \\
+   1
+\end{bmatrix}
+ =
+\begin{bmatrix}
+   cos{\theta} & sin{\theta} & 0 \\
+   -sin{\theta} & cos{\theta} & 0 \\
+   0 & 0 & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+   x \\
+   y \\
+   1
+\end{bmatrix}</script></li>
 <li><p>绕任意点旋转</p>
-<p><img src="/../src/data_augmentation/RotateAroundCenter.png" alt="绕原点旋转"></p>
+<p><img src="../src/data_augmentation/RotateAroundCenter.png" alt="绕原点旋转"></p>
 <p>如图所示, 点C坐标为$(x_C, y_C)$, 点P坐标为(x, y), CP与x轴正方向的夹角为$\alpha$, CP的长度为$l$. 点P绕点$C$顺时针旋转$\theta$到$P^{‘}$为$(x^{‘}, y^{‘})$</p>
-<p>点P的坐标表示为:<br>$$<br>\begin{cases}<br> x &#x3D; x_C + l \cdot{\cos{\alpha }}<br> \<br> y &#x3D; y_C + l \cdot{\sin{\alpha }}<br>\end{cases}<br>$$</p>
-<p>点$P^{‘}$的坐标表示为:<br>$$<br>\begin{cases}<br> x^{‘} &amp; &#x3D; x_C + l \cdot{\cos{(\alpha - \theta)}} \<br>   &amp; &#x3D; x_C + l \cdot{\cos{\alpha}\cos{\theta}} + l \cdot{\sin{\alpha}\sin{\theta}} \<br>   &amp; &#x3D; (x_C + l \cdot{\cos{\alpha }}) \cdot \cos{\theta} + (y_C + l \cdot{\sin{\alpha }}) \cdot \sin {\theta} + (x_C-x_C \cdot \cos{\theta} - y_C \cdot \sin{\theta}) \<br>   &amp;&#x3D; x cos{\theta} + y \sin{\theta} + (x_C-x_C \cdot \cos{\theta} - y_C \cdot \sin{\theta})<br> \<br> y^{‘} &amp;&#x3D; y_C + l \cdot{\sin{(\alpha - \theta)}} \<br>   &amp;&#x3D; y_C + l \cdot{\sin{\alpha}\cos{\theta}} - l \cdot{\cos{\alpha}\sin{\theta}} \<br>   &amp; &#x3D; (y_C + l \cdot{\sin{\alpha }}) \cdot \cos{\theta} - (x_C + l \cdot{\cos{\alpha }}) \cdot \sin {\theta} + (y_C-y_C \cdot \cos{\theta} + x_C \cdot \sin{\theta}) \<br>   &amp;&#x3D; - x \sin{\theta} + y cos{\theta} + (y_C-y_C \cdot \cos{\theta} + x_C \cdot \sin{\theta})<br>\end{cases}<br>$$</p>
-<h1 id="即-begin-bmatrix-x-‘-y-‘-1-end-bmatrix-1"><a href="#即-begin-bmatrix-x-‘-y-‘-1-end-bmatrix-1" class="headerlink" title="即:$$\begin{bmatrix}   x^{‘} \   y^{‘} \   1\end{bmatrix}"></a>即:<br>$$<br>\begin{bmatrix}<br>   x^{‘} \<br>   y^{‘} \<br>   1<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>   cos{\theta} &amp; sin{\theta} &amp; x_C-x_C \cdot \cos{\theta} - y_C \cdot \sin{\theta} \<br>   -sin{\theta} &amp; cos{\theta} &amp; y_C-y_C \cdot \cos{\theta} + x_C \cdot \sin{\theta} \<br>   0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>\cdot<br>\begin{bmatrix}<br>   x \<br>   y \<br>   1<br>\end{bmatrix}<br>$$</p>
-</li>
+<p>点P的坐标表示为:</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+ x = x_C + l \cdot{\cos{\alpha }}
+ \\
+ y = y_C + l \cdot{\sin{\alpha }}
+\end{cases}</script><p>点$P^{‘}$的坐标表示为:</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+ x^{'} & = x_C + l \cdot{\cos{(\alpha - \theta)}} \\ 
+       & = x_C + l \cdot{\cos{\alpha}\cos{\theta}} + l \cdot{\sin{\alpha}\sin{\theta}} \\
+       & = (x_C + l \cdot{\cos{\alpha }}) \cdot \cos{\theta} + (y_C + l \cdot{\sin{\alpha }}) \cdot \sin {\theta} + (x_C-x_C \cdot \cos{\theta} - y_C \cdot \sin{\theta}) \\
+       &= x cos{\theta} + y \sin{\theta} + (x_C-x_C \cdot \cos{\theta} - y_C \cdot \sin{\theta})
+ \\
+ y^{'} &= y_C + l \cdot{\sin{(\alpha - \theta)}} \\
+       &= y_C + l \cdot{\sin{\alpha}\cos{\theta}} - l \cdot{\cos{\alpha}\sin{\theta}} \\
+       & = (y_C + l \cdot{\sin{\alpha }}) \cdot \cos{\theta} - (x_C + l \cdot{\cos{\alpha }}) \cdot \sin {\theta} + (y_C-y_C \cdot \cos{\theta} + x_C \cdot \sin{\theta}) \\
+       &= - x \sin{\theta} + y cos{\theta} + (y_C-y_C \cdot \cos{\theta} + x_C \cdot \sin{\theta})
+\end{cases}</script><p>即:</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+   x^{'} \\
+   y^{'} \\
+   1
+\end{bmatrix}
+ =
+\begin{bmatrix}
+   cos{\theta} & sin{\theta} & x_C-x_C \cdot \cos{\theta} - y_C \cdot \sin{\theta} \\
+   -sin{\theta} & cos{\theta} & y_C-y_C \cdot \cos{\theta} + x_C \cdot \sin{\theta} \\
+   0 & 0 & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+   x \\
+   y \\
+   1
+\end{bmatrix}</script></li>
 </ol>
 <h2 id="cv-getRotationMatrix2D-center-angle-scale"><a href="#cv-getRotationMatrix2D-center-angle-scale" class="headerlink" title="cv.getRotationMatrix2D(center, angle, scale)"></a>cv.getRotationMatrix2D(center, angle, scale)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cv2.getRotationMatrix2D(center, angle, scale)</span><br><span class="line"><span class="meta">@Args:</span></span><br><span class="line">   center: 旋转中心</span><br><span class="line">   angle: 旋转角度, 单位为度, 顺时针旋转</span><br><span class="line">   scale: 缩放尺度</span><br><span class="line"><span class="meta">@Return:</span></span><br><span class="line">   返回一个变换阵, np.array, shape = (<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<p>设center &#x3D; $(x_C, y_C)$, angle &#x3D; theta, scale &#x3D; s. 则返回的变换阵为<br>$$<br>T &#x3D;<br>\begin{bmatrix}<br>   cos{\theta} \cdot s &amp; sin{\theta} \cdot s &amp; x_C-(x_C \cdot \cos{\theta} + y_C \cdot \sin{\theta})\cdot s \<br>   -sin{\theta} \cdot s &amp; cos{\theta} \cdot s &amp; y_C-(y_C \cdot \cos{\theta} - x_C \cdot \sin{\theta}) \cdot s \<br>   0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>$$<br>示例:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">center = (<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">angle = <span class="number">60</span></span><br><span class="line">scale = <span class="number">1.1</span></span><br><span class="line">T1 = cv2.getRotationMatrix2D(center, angle, scale)</span><br><span class="line">T2 = np.zeros((<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">angle = angle/<span class="number">180</span>*np.pi</span><br><span class="line">T2[<span class="number">0</span>, <span class="number">0</span>] = np.cos(angle)</span><br><span class="line">T2[<span class="number">0</span>, <span class="number">1</span>] = np.sin(angle)</span><br><span class="line">T2[<span class="number">0</span>, <span class="number">2</span>] = x - (x*np.cos(angle)+y*np.sin(angle))*scale</span><br><span class="line">T2[<span class="number">1</span>, <span class="number">0</span>] = -np.sin(angle)</span><br><span class="line">T2[<span class="number">1</span>, <span class="number">1</span>] = np.cos(angle)</span><br><span class="line">T2[<span class="number">1</span>, <span class="number">2</span>] = y - (y*np.cos(angle)-x*np.sin(angle))*scale</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;T1:\n&#123;&#125;\nT2:\n&#123;&#125;&quot;</span>.<span class="built_in">format</span>(T1, T2))</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;输出</span></span><br><span class="line"><span class="string">T1:</span></span><br><span class="line"><span class="string">[[ 0.55        0.95262794 -0.50262794]</span></span><br><span class="line"><span class="string"> [-0.95262794  0.55        1.40262794]]</span></span><br><span class="line"><span class="string">T2:</span></span><br><span class="line"><span class="string">[[ 0.5         0.8660254  -0.50262794]</span></span><br><span class="line"><span class="string"> [-0.8660254   0.5         1.40262794]]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>设center = $(x_C, y_C)$, angle = theta, scale = s. 则返回的变换阵为</p>
+<script type="math/tex; mode=display">
+T =
+\begin{bmatrix}
+   cos{\theta} \cdot s & sin{\theta} \cdot s & x_C-(x_C \cdot \cos{\theta} + y_C \cdot \sin{\theta})\cdot s \\
+   -sin{\theta} \cdot s & cos{\theta} \cdot s & y_C-(y_C \cdot \cos{\theta} - x_C \cdot \sin{\theta}) \cdot s \\
+   0 & 0 & 1
+\end{bmatrix}</script><p>示例:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">center = (<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">angle = <span class="number">60</span></span><br><span class="line">scale = <span class="number">1.1</span></span><br><span class="line">T1 = cv2.getRotationMatrix2D(center, angle, scale)</span><br><span class="line">T2 = np.zeros((<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">angle = angle/<span class="number">180</span>*np.pi</span><br><span class="line">T2[<span class="number">0</span>, <span class="number">0</span>] = np.cos(angle)</span><br><span class="line">T2[<span class="number">0</span>, <span class="number">1</span>] = np.sin(angle)</span><br><span class="line">T2[<span class="number">0</span>, <span class="number">2</span>] = x - (x*np.cos(angle)+y*np.sin(angle))*scale</span><br><span class="line">T2[<span class="number">1</span>, <span class="number">0</span>] = -np.sin(angle)</span><br><span class="line">T2[<span class="number">1</span>, <span class="number">1</span>] = np.cos(angle)</span><br><span class="line">T2[<span class="number">1</span>, <span class="number">2</span>] = y - (y*np.cos(angle)-x*np.sin(angle))*scale</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;T1:\n&#123;&#125;\nT2:\n&#123;&#125;&quot;</span>.<span class="built_in">format</span>(T1, T2))</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;输出</span></span><br><span class="line"><span class="string">T1:</span></span><br><span class="line"><span class="string">[[ 0.55        0.95262794 -0.50262794]</span></span><br><span class="line"><span class="string"> [-0.95262794  0.55        1.40262794]]</span></span><br><span class="line"><span class="string">T2:</span></span><br><span class="line"><span class="string">[[ 0.5         0.8660254  -0.50262794]</span></span><br><span class="line"><span class="string"> [-0.8660254   0.5         1.40262794]]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/13/%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA/" data-id="clhmbdp170002sia91xcbhkvu" data-title="数据增强" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/05/13/%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA/" data-id="clhmbzf6p0003bda9erhraw5g" data-title="数据增强" class="article-share-link">Share</a>
       
       
       
